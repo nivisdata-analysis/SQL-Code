@@ -72,7 +72,7 @@ VALUES
 ## Case Study Questions:
 
 1. What is the total amount each customer spent at the restaurant?
-Query #1
+<br> Query #1
 ```
 SELECT customer_id, SUM(price) AS total_amount
 FROM sales s
@@ -82,7 +82,7 @@ GROUP BY customer_id;
 ```
 
 3. How many days has each customer visited the restaurant?
-Query #2
+<br> Query #2
 ```
 SELECT customer_id, COUNT(DISTINCT order_date) AS total_visit_days
 FROM sales
@@ -90,7 +90,7 @@ GROUP BY customer_id;
 ```
 
 3. What was the first item from the menu purchased by each customer?
-Query #3
+<br> Query #3
 ```
 SELECT customer_id, product_name
 FROM  
@@ -103,7 +103,7 @@ WHERE row_num = 1;
 ```
 
 4. What is the most purchased item on the menu and how many times was it purchased by all customers?
-Query #4
+<br> Query #4
 ```
 SELECT TOP 1 product_name, COUNT(s.product_id) as Number_of_times_purchased
 FROM sales s 
