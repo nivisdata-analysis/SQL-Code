@@ -66,3 +66,5 @@ VALUES
     ('A', '2021-01-07'),
     ('B', '2021-01-09');
 ```  
+## Entity Relationship Diagram View
+![Danny's Diner](https://github.com/nivisdata-analysis/SQL-Code/assets/171444078/dd8d9e94-c937-4cfa-8e11-6f401704aa34)
