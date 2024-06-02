@@ -3,9 +3,9 @@ Note: All source material and respected credit is from: https://8weeksqlchalleng
 
 ## Table of contents:
 1. [Dataset Structure](https://github.com/nivisdata-analysis/SQL-Code/blob/main/8%20Week%20SQL%20Challenge/Danny's%20Diner.md#dataset-structure)
-2. Entity Relationship Diagram
-3. Case Study Questions + Answers
-4. Bonus Questions + Answers
+2. [Entity Relationship Diagram](https://github.com/nivisdata-analysis/SQL-Code/blob/main/8%20Week%20SQL%20Challenge/Danny's%20Diner.md#entity-relationship-diagram-view)
+3. [Case Study Questions + Answers](https://github.com/nivisdata-analysis/SQL-Code/blob/main/8%20Week%20SQL%20Challenge/Danny's%20Diner.md#case-study-questions)
+<!-- 4. Bonus Questions + Answers -->
 
 ## Dataset Structure:
 Note: The original data was built around PostgreSQL, but was swapped to fit SQL Server syntax.
@@ -73,7 +73,7 @@ VALUES
 
 **1. What is the total amount each customer spent at the restaurant?**
 ```
-SELECT customer_id, SUM(price) AS total_amount
+SELECT s.customer_id, SUM(price) AS total_amount
 FROM sales s
 JOIN menu m
 	ON s.product_id = m.product_id
