@@ -72,8 +72,6 @@ VALUES
 ## Case Study Questions:
 
 **1. What is the total amount each customer spent at the restaurant?**
-<br>
-Query #1
 ```
 SELECT customer_id, SUM(price) AS total_amount
 FROM sales s
@@ -83,8 +81,6 @@ GROUP BY customer_id;
 ```
 
 **2. How many days has each customer visited the restaurant?**
-<br>
-Query #2
 ```
 SELECT customer_id, COUNT(DISTINCT order_date) AS total_visit_days
 FROM sales
@@ -92,8 +88,6 @@ GROUP BY customer_id;
 ```
 
 **3. What was the first item from the menu purchased by each customer?**
-<br>
-Query #3
 ```
 SELECT customer_id, product_name
 FROM  
@@ -105,9 +99,7 @@ FROM
 WHERE row_num = 1;
 ```
 
-4. What is the most purchased item on the menu and how many times was it purchased by all customers?
-<br>
-Query #4
+**4. What is the most purchased item on the menu and how many times was it purchased by all customers?**
 ```
 SELECT TOP 1 product_name, COUNT(s.product_id) as Number_of_times_purchased
 FROM sales s 
@@ -117,9 +109,7 @@ GROUP BY s.product_id, product_name
 ORDER BY COUNT(s.product_id) DESC
 ```
 
-**5. Which item was the most popular for each customer?
-<br>
-Query #5**
+**5. Which item was the most popular for each customer?**
 ```
 WITH item_count AS (
 	SELECT customer_id, product_name,
@@ -137,8 +127,7 @@ WHERE den_rnk = 1
 ORDER BY customer_id ;
 ```
 
-6. Which item was purchased first by the customer after they became a member?
-Query #6
+**6. Which item was purchased first by the customer after they became a member?**
 ```
 With first_item AS (
 	SELECT s.customer_id, product_id,
@@ -156,8 +145,7 @@ JOIN menu m
 WHERE item_no = 1;
 ```
 
-7. Which item was purchased just before the customer became a member?
-Query #7
+**7. Which item was purchased just before the customer became a member?**
 ```
 With before_mem AS (
 	SELECT s.customer_id, product_id, Order_date,
@@ -175,8 +163,7 @@ JOIN menu m
 WHERE item_no = 1;
 ```
 
-8. What is the total items and amount spent for each member before they became a member?
-Query #8
+**8. What is the total items and amount spent for each member before they became a member?**
 ```
 SELECT s.customer_id, SUM(m.price) as total_amount, COUNT(s.product_id) AS total_items
 FROM sales s
@@ -188,8 +175,7 @@ WHERE s.order_date < mem.join_date
 GROUP BY s.customer_id;
 ```
 
-9.  If each $1 spent equates to 10 points and sushi has a 2x points multiplier how many points would each customer have?
-Query #9
+**9.  If each $1 spent equates to 10 points and sushi has a 2x points multiplier how many points would each customer have?**
 ```
 WITH points_cte AS(
 	SELECT s.customer_id,
@@ -205,8 +191,7 @@ FROM points_cte
 GROUP BY customer_id;
 ```
 
- 10. In the first week after a customer joins the program (including their join date) they earn 2x points on all items, not just sushi -      how many points do customer A and B have at the end of January?
-Query #10
+**10. In the first week after a customer joins the program (including their join date) they earn 2x points on all items, not just sushi -      how many points do customer A and B have at the end of January?**
 ```
 WITH added_points AS(
 	SELECT s.customer_id, s.product_id, m.price, s.order_date,  
