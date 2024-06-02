@@ -2,7 +2,7 @@
 Note: All source material and respected credit is from: https://8weeksqlchallenge.com/
 
 ## Table of contents:
-1. [Dataset Structure] (https://github.com/nivisdata-analysis/SQL-Code/blob/main/8%20Week%20SQL%20Challenge/Danny's%20Diner.md#dataset-structure)
+1. [Dataset Structure](https://github.com/nivisdata-analysis/SQL-Code/blob/main/8%20Week%20SQL%20Challenge/Danny's%20Diner.md#dataset-structure)
 2. Entity Relationship Diagram
 3. Case Study Questions + Answers
 4. Bonus Questions + Answers
