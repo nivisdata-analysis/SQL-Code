@@ -71,8 +71,9 @@ VALUES
 
 ## Case Study Questions:
 
-1. What is the total amount each customer spent at the restaurant?
-<br> Query #1
+**1. What is the total amount each customer spent at the restaurant?**
+<br>
+Query #1
 ```
 SELECT customer_id, SUM(price) AS total_amount
 FROM sales s
@@ -81,16 +82,18 @@ JOIN menu m
 GROUP BY customer_id;
 ```
 
-3. How many days has each customer visited the restaurant?
-<br> Query #2
+**2. How many days has each customer visited the restaurant?**
+<br>
+Query #2
 ```
 SELECT customer_id, COUNT(DISTINCT order_date) AS total_visit_days
 FROM sales
 GROUP BY customer_id;
 ```
 
-3. What was the first item from the menu purchased by each customer?
-<br> Query #3
+**3. What was the first item from the menu purchased by each customer?**
+<br>
+Query #3
 ```
 SELECT customer_id, product_name
 FROM  
@@ -103,7 +106,8 @@ WHERE row_num = 1;
 ```
 
 4. What is the most purchased item on the menu and how many times was it purchased by all customers?
-<br> Query #4
+<br>
+Query #4
 ```
 SELECT TOP 1 product_name, COUNT(s.product_id) as Number_of_times_purchased
 FROM sales s 
@@ -113,8 +117,9 @@ GROUP BY s.product_id, product_name
 ORDER BY COUNT(s.product_id) DESC
 ```
 
-5. Which item was the most popular for each customer?
-Query #5
+**5. Which item was the most popular for each customer?
+<br>
+Query #5**
 ```
 WITH item_count AS (
 	SELECT customer_id, product_name,
