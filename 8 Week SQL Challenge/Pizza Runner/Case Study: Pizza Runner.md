@@ -133,6 +133,9 @@ VALUES
   (11, 'Tomatoes'),
   (12, 'Tomato Sauce');
 ```
+## Entity Relationship Diagram
+https://github.com/TheCaptainFalcon/8wksql-cs2/raw/master/ERD-CS2.JPG
+
 ## Data Cleaning
 After investigating the data in the tables, we conclude there is need for data cleaning before we can start the analysis part. 
 
@@ -237,7 +240,7 @@ ALTER COLUMN toppings VARCHAR(MAX);
 ALTER TABLE pizza_toppings
 ALTER COLUMN topping_name VARCHAR(MAX)
 ```
-Now, we can perform the analysis on clean data.
+Now, we can perform the analysis on the cleaned data.
 
 
 
