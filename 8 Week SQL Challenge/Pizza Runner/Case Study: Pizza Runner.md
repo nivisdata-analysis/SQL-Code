@@ -136,13 +136,14 @@ VALUES
 ## Data Cleaning
 After investigating the data in the tables, we conclude there is need for data cleaning before we can start the analysis part. 
 
-To clean the customer_orders and runner_orders table: I created new tables called customer_orders_temp and runner_orders_temp respectively to avoid any data loss of the original table.
+To clean the **customer_orders** and **runner_orders** table: I created new tables called customer_orders_temp and runner_orders_temp respectively to avoid any data loss of the original table.
 
 ### customer_orders_temp
 
 Changes:
 + Changing all the null and blank to Null
 ```
+DROP TABLE IF EXISTS customer_orders_temp
 SELECT order_id, 
        customer_id,
        pizza_id, 
@@ -164,6 +165,7 @@ Changes:
 + Removing anything after the numbers from duration
 + Creating a clean temp table
 ```
+DROP TABLE IF EXISTS runner_orders_temp
 SELECT	order_id, 
 	runner_id,
 	CASE 
@@ -185,6 +187,21 @@ SELECT	order_id,
 INTO runner_orders_temp
 FROM runner_orders;
 ```
+### pizza_recipes_temp
+
+Changes:
++ Splitting comma delimited lists into rows
++ Creating a clean new table
+```
+DROP TABLE IF EXISTS pizza_recipes_temp;
+SELECT pizza_id, 
+       TRIM(topping_id.value) as topping_id,
+       topping_name
+INTO pizza_recipes_temp
+FROM pizza_recipes as p
+CROSS APPLY string_split(p.toppings, ',') as topping_id
+INNER JOIN pizza_toppings p2 ON TRIM(topping_id.value) = p2.topping_id
+```
 ## Changing data types
 
 For runner_orders table:
@@ -202,13 +219,13 @@ For pizza_toppings table:
 + Change topping_name to VARCHAR(MAX)
 
 ```
-ALTER TABLE runner_orders 
+ALTER TABLE runner_orders_temp
 ALTER COLUMN pickup_time DATETIME
 
-ALTER TABLE runner_orders
+ALTER TABLE runner_orders_temp
 ALTER COLUMN distance FLOAT
 
-ALTER TABLE runner_orders
+ALTER TABLE runner_orders_temp
 ALTER COLUMN duration INT;
 
 ALTER TABLE pizza_names
@@ -220,6 +237,7 @@ ALTER COLUMN toppings VARCHAR(MAX);
 ALTER TABLE pizza_toppings
 ALTER COLUMN topping_name VARCHAR(MAX)
 ```
+Now, we can perform the analysis on clean data.
 
 
 
