@@ -185,8 +185,41 @@ SELECT	order_id,
 INTO runner_orders_temp
 FROM runner_orders;
 ```
+## Changing data types
 
+For runner_orders table:
++ Change pickup_time DATETIME
++ Change distance to FLOAT
++ Change duration to INT
 
+For pizza_names table:
++ Change pizza_name to VARCHAR(MAX)
+
+For pizza_recipes table:
++ Change toppings to VARCHAR(MAX)
+
+For pizza_toppings table:
++ Change topping_name to VARCHAR(MAX)
+
+```
+ALTER TABLE runner_orders 
+ALTER COLUMN pickup_time DATETIME
+
+ALTER TABLE runner_orders
+ALTER COLUMN distance FLOAT
+
+ALTER TABLE runner_orders
+ALTER COLUMN duration INT;
+
+ALTER TABLE pizza_names
+ALTER COLUMN pizza_name VARCHAR(MAX);
+
+ALTER TABLE pizza_recipes
+ALTER COLUMN toppings VARCHAR(MAX);
+
+ALTER TABLE pizza_toppings
+ALTER COLUMN topping_name VARCHAR(MAX)
+```
 
 
 
