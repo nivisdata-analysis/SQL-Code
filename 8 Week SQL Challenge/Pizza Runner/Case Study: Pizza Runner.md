@@ -132,3 +132,43 @@ VALUES
   (10, 'Salami'),
   (11, 'Tomatoes'),
   (12, 'Tomato Sauce');
+```
+## Data Cleaning
+After investigating the data in the tables, we conclude there is need for data cleaning before we can start the analysis part. 
+
+### customer_orders
+
+To clean the customer_orders table: I created a new table called customer_orders_temp and cleaned it to avoid any data loss of the original table.
+
+Changes:
++ Changing all the null and blank to Null
+
+### runner_orders table 
+Changes:
++ Changing all the null and blank to Null
++ Removing 'km' from distance
++ Removing anything after the numbers from duration
++ Creating a clean temp table
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
