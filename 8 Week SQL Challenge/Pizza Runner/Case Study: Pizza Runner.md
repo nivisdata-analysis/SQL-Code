@@ -165,23 +165,23 @@ Changes:
 + Creating a clean temp table
 ```
 SELECT	order_id, 
-		runner_id,
-		CASE 
-			WHEN pickup_time like 'null' THEN NULL
-			ELSE pickup_time END AS pickup_time,
-		CASE 
-			WHEN distance like 'null' THEN NULL
-			WHEN distance LIKE '%km' THEN TRIM('km' FROM distance)
-			ELSE distance END AS distance,
-		CASE 
-			WHEN duration like 'null' THEN NULL
-			WHEN duration LIKE '%mins' THEN TRIM('mins' FROM duration)
-			WHEN duration LIKE '%minute' THEN TRIM('minute' FROM duration)        
-			WHEN duration LIKE '%minutes' THEN TRIM('minutes' FROM duration)  
-			ELSE duration END AS duration,
-		CASE 
-			WHEN cancellation = '' OR cancellation LIKE 'null' OR cancellation LIKE 'NaN'  THEN NULL
-			ELSE cancellation END AS cancellation
+	runner_id,
+	CASE 
+		WHEN pickup_time like 'null' THEN NULL
+		ELSE pickup_time END AS pickup_time,
+	CASE 
+		WHEN distance like 'null' THEN NULL
+		WHEN distance LIKE '%km' THEN TRIM('km' FROM distance)
+		ELSE distance END AS distance,
+	CASE 
+		WHEN duration like 'null' THEN NULL
+		WHEN duration LIKE '%mins' THEN TRIM('mins' FROM duration)
+		WHEN duration LIKE '%minute' THEN TRIM('minute' FROM duration)        
+		WHEN duration LIKE '%minutes' THEN TRIM('minutes' FROM duration)  
+		ELSE duration END AS duration,	
+	CASE 
+		WHEN cancellation = '' OR cancellation LIKE 'null' OR cancellation LIKE 'NaN'  THEN NULL
+		ELSE cancellation END AS cancellation
 INTO runner_orders_temp
 FROM runner_orders;
 ```
