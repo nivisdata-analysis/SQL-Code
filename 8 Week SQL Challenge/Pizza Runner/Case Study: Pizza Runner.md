@@ -134,7 +134,7 @@ VALUES
   (12, 'Tomato Sauce');
 ```
 ## Entity Relationship Diagram
-https://github.com/TheCaptainFalcon/8wksql-cs2/raw/master/ERD-CS2.JPG
+![Pizza Runner - dbdiagram](https://github.com/nivisdata-analysis/SQL-Code/assets/171444078/10bc265a-8a1e-4f6e-a1cc-77359b374552)
 
 ## Data Cleaning
 After investigating the data in the tables, we conclude there is need for data cleaning before we can start the analysis part. 
