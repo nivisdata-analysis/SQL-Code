@@ -1,9 +1,51 @@
---Generate an order item for each record in the customers_orders table in the format of one of the following:
---Meat Lovers
---Meat Lovers - Exclude Beef
---Meat Lovers - Extra Bacon
---Meat Lovers - Exclude Cheese, Bacon - Extra Mushroom, Peppers
+# Ingredient Optimisation
 
+**1. What are the standard ingredients for each pizza?**
+```
+SELECT pizza_id, STRING_AGG(topping_name, ', ') AS standard_ingredients
+FROM pizza_recipes_temp
+GROUP BY pizza_id;
+```
+ 
+**2. What was the most commonly added extra?**
+```
+WITH max_extra AS (
+	SELECT p.pizza_id, 
+		   TRIM(topping_id.value) as topping_id,
+		   topping_name
+	FROM customer_orders_temp as p
+	CROSS APPLY string_split(p.extras, ',') as topping_id
+	INNER JOIN pizza_toppings p2 ON TRIM(topping_id.value) = p2.topping_id
+)
+SELECT topping_id,COUNT(topping_id) AS exclusion_counts, topping_name
+FROM max_extra
+GROUP BY topping_id, topping_name
+ORDER BY exclusion_counts DESC;
+```
+
+**3. What was the most common exclusion?**
+```
+WITH max_exclusion AS (
+	SELECT p.pizza_id, 
+       TRIM(topping_id.value) as topping_id,
+       topping_name
+	FROM customer_orders_temp as p
+	CROSS APPLY string_split(p.exclusions, ',') as topping_id
+	RIGHT JOIN pizza_toppings p2 ON TRIM(topping_id.value) = p2.topping_id
+)
+
+SELECT topping_id,COUNT(topping_id) AS exclusion_counts, topping_name
+FROM max_exclusion
+GROUP BY topping_id, topping_name
+ORDER BY exclusion_counts DESC;
+```
+
+**4. Generate an order item for each record in the customers_orders table in the format of one of the following:**
+**Meat Lovers**
+**Meat Lovers - Exclude Beef**
+**Meat Lovers - Extra Bacon**
+**Meat Lovers - Exclude Cheese, Bacon - Extra Mushroom, Peppers**
+```
 SELECT
 	co.order_id,
 	co.customer_id,
@@ -23,26 +65,11 @@ SELECT
 	END AS order_item
 FROM customer_orders_temp co
 JOIN pizza_names pn ON co.pizza_id = pn.pizza_id;
-SELECT *
-FROM customer_orders_temp;
+```
 
-
-
---Generate an alphabetically ordered comma separated ingredient list for each pizza order from the customer_orders table and add a 2x in front of any relevant ingredients
---For example: "Meat Lovers: 2xBacon, Beef, ... , Salami"
-WITH group_cte AS (
-SELECT pr.pizza_id, CONCAT(pizza_name, ': ' , STRING_AGG(topping_name, ', ')) AS Ingredients_list
-FROM pizza_recipes_temp pr
-JOIN pizza_names pn ON pr.pizza_id = pn.pizza_id
-GROUP BY pr.pizza_id,pizza_name
-)
-
-SELECT order_id, customer_id,co.pizza_id, exclusions, extras, Ingredients_list,record_id
-FROM customer_orders_temp co
-JOIN group_cte gc ON co.pizza_id = gc.pizza_id
-ORDER BY order_id
-
--------------------------------------------------------
+**5. Generate an alphabetically ordered comma separated ingredient list for each pizza order from the customer_orders table and add a 2x in front of any relevant ingredients
+For example: "Meat Lovers: 2xBacon, Beef, ... , Salami"**
+```
 WITH extra_top AS (
 	SELECT record_id,p.pizza_id, 
        TRIM(topping_id.value) as topping_id
@@ -81,15 +108,4 @@ SELECT record_id,
 FROM INGREDIENT_CTE
 GROUP BY record_id,pizza_name, order_id
 ORDER BY 1;
---------------------------------
-WITH extra_table AS (
-	SELECT record_id, p.order_id,
-       TRIM(extras_cleaned.value) as extras_cleaned
-	FROM customer_orders_temp as p
-	CROSS APPLY string_split(p.extras, ',') as extras_cleaned
-)
-SELECT *,
-	CASE WHEN pizza_id = 1 THEN 12
-	ELSE 10 END AS total_amount
-FROM customer_orders_temp co 
-LEFT JOIN extra_table et ON co.record_id = et.record_id
+```
