@@ -26,9 +26,9 @@ ORDER BY exclusion_counts DESC;
 **3. What was the most common exclusion?**
 ```
 WITH max_exclusion AS (
-	SELECT p.pizza_id, 
-       TRIM(topping_id.value) as topping_id,
-       topping_name
+	SELECT  p.pizza_id, 
+       		TRIM(topping_id.value) as topping_id,
+       		topping_name
 	FROM customer_orders_temp as p
 	CROSS APPLY string_split(p.exclusions, ',') as topping_id
 	RIGHT JOIN pizza_toppings p2 ON TRIM(topping_id.value) = p2.topping_id
@@ -54,7 +54,7 @@ SELECT
     co.exclusions,
     co.extras,
     CASE
-		WHEN co.pizza_id = 1 AND co.exclusions IS NULL AND co.extras IS NULL THEN 'Meat Lovers'
+	WHEN co.pizza_id = 1 AND co.exclusions IS NULL AND co.extras IS NULL THEN 'Meat Lovers'
         WHEN co.pizza_id = 2 AND co.exclusions IS NULL AND co.extras IS NULL THEN 'Vegetarian'
         WHEN co.pizza_id = 1 AND co.exclusions = '4' AND co.extras IS NULL THEN 'Meat Lovers - Exclude Cheese'
         WHEN co.pizza_id = 2 AND co.exclusions = '4' AND co.extras IS NULL THEN 'Vegetarian - Exclude Cheese'
@@ -71,21 +71,21 @@ JOIN pizza_names pn ON co.pizza_id = pn.pizza_id;
 For example: "Meat Lovers: 2xBacon, Beef, ... , Salami"**
 ```
 WITH extra_top AS (
-	SELECT record_id,p.pizza_id, 
-       TRIM(topping_id.value) as topping_id
-	FROM customer_orders_temp as p
-	CROSS APPLY string_split(p.exclusions, ',') as topping_id
-	LEFT JOIN pizza_toppings p2 ON TRIM(topping_id.value) = p2.topping_id
+		SELECT  record_id,p.pizza_id, 
+			TRIM(topping_id.value) as topping_id
+		FROM customer_orders_temp as p
+		CROSS APPLY string_split(p.exclusions, ',') as topping_id
+		LEFT JOIN pizza_toppings p2 ON TRIM(topping_id.value) = p2.topping_id
 ),
 exclude_top AS (
-	SELECT record_id,p.pizza_id, 
-       TRIM(topping_id.value) as topping_id
-	FROM customer_orders_temp as p
-	CROSS APPLY string_split(p.extras, ',') as topping_id
-	LEFT JOIN pizza_toppings p2 ON TRIM(topping_id.value) = p2.topping_id
+		SELECT record_id,p.pizza_id, 
+       			TRIM(topping_id.value) as topping_id
+		FROM customer_orders_temp as p
+		CROSS APPLY string_split(p.extras, ',') as topping_id
+		LEFT JOIN pizza_toppings p2 ON TRIM(topping_id.value) = p2.topping_id
 ),
 
-INGREDIENT_CTE AS (SELECT record_id,order_id,
+cte_ingredient AS (SELECT record_id,order_id,
                                 pizza_name,
                                 CASE WHEN pr.topping_id in (
                                                   SELECT topping_id
@@ -104,8 +104,8 @@ INGREDIENT_CTE AS (SELECT record_id,order_id,
 )
 
 SELECT record_id, 
-      CONCAT(pizza_name +':' ,STRING_AGG(topping, ',' ) WITHIN GROUP (ORDER BY topping ASC)) AS ingredient_list, order_id
-FROM INGREDIENT_CTE
+      CONCAT(pizza_name + ': ' ,STRING_AGG(topping, ',' ) WITHIN GROUP (ORDER BY topping ASC)) AS ingredient_list, order_id
+FROM cte_ingredient
 GROUP BY record_id,pizza_name, order_id
 ORDER BY 1;
 ```
