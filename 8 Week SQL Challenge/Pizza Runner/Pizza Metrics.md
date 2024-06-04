@@ -1,4 +1,4 @@
-# Runner and Customer Experience
+# Pizza Metrics Solution
 
 **1. How many pizzas were ordered?**
 ```
