@@ -10,7 +10,7 @@ GROUP BY DATEPART(WEEK, registration_date);
 
 **2. What was the average time in minutes it took for each runner to arrive at the Pizza Runner HQ to pickup the order?**
 ```
-WITH time_diff AS (
+WITH avg_duration AS (
 	SELECT ro.runner_id, ro.order_id, order_time, pickup_time, DATEDIFF(minute,order_time,pickup_time) AS time_taken
 	FROM runner_orders_temp ro
 	JOIN customer_orders_temp co ON ro.order_id = co.order_id
@@ -18,7 +18,7 @@ WITH time_diff AS (
 )
 
 SELECT runner_id, ROUND(AVG(time_taken), 0) AS average_time
-FROM time_diff
+FROM avg_duration
 GROUP BY runner_id;
 ```
 
@@ -67,7 +67,7 @@ ORDER BY runner_id, order_id;
 **7. What is the successful delivery percentage for each runner?**
 ```
 SELECT 
-	runner_id,
+    runner_id,
     COUNT(pickup_time) AS success_delivery,
     COUNT(order_id) AS total_order,
     ROUND(100*COUNT(pickup_time)/COUNT(order_id),0) AS perc_delivery
