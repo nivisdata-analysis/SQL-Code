@@ -7,7 +7,6 @@ Note: All source material and respected credit is from: https://8weeksqlchalleng
 2. Entity Relationship Diagram
 3. Data Cleaning
 4. Case Study Questions + Answers
-5. Bonus Questions + Answers
 
 ## Dataset Structure
 Note: The original data was built around PostgreSQL, but was swapped to fit SQL Server syntax.
